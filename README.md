@@ -23,6 +23,8 @@ So, what word has on average the fewest remaining words after it has been guesse
 
 This takes into account letter position, not just letter frequency. "arise" is not quite as good.
 
-And if "raise" gets you nothing, the best next word is "clout".
+And if "raise" gets you nothing, re-running with everything with those letters removed leaves only 168 words and the best splitter for those is "could".
+
+But if you want to charge forward with a 2 word opener, "clout" is the highest rated splitter of the whole 2315 word set that has no letters from "raise" in it.
 
 So, there you go, go forth and be more reputable among your peers. raise your clout.

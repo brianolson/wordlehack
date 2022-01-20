@@ -89,12 +89,16 @@ func submitter(la []string, guesses chan string) {
 }
 
 func main() {
-	fin, err := os.Open("La.json")
-	maybefail(err, "La.json: %v", err)
+	path := "La.json"
+	if len(os.Args) > 1 {
+		path = os.Args[1]
+	}
+	fin, err := os.Open(path)
+	maybefail(err, "%s: %v", path, err)
 	dec := json.NewDecoder(fin)
 	var la []string
 	err = dec.Decode(&la)
-	maybefail(err, "La.json []string: %v", err)
+	maybefail(err, "%s: []string: %v", path, err)
 	wg := sync.WaitGroup{}
 	guesses := make(chan string, 20)
 	results := make(chan StringInt, 20)
