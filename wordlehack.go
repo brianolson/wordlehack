@@ -46,6 +46,7 @@ func main() {
 	err = dec.Decode(&la)
 	maybefail(err, "La.json []string: %v", err)
 	var hasb [5]byte
+	var notb [5]byte
 	var posb [5]string
 	for gi, guess := range la {
 		gb := []byte(guess)
@@ -55,6 +56,7 @@ func main() {
 				continue
 			}
 			has := hasb[:0]
+			not := notb[:0]
 			for gci, gc := range gb {
 				if gc == target[gci] {
 					posb[gci] = string(gb[gci : gci+1])
@@ -63,6 +65,7 @@ func main() {
 					posb[gci] = fmt.Sprintf("[^%c]", gc)
 				} else {
 					posb[gci] = "."
+					not = append(not, gc)
 				}
 			}
 			res := strings.Join(posb[:], "")
@@ -72,10 +75,24 @@ func main() {
 				if !re.MatchString(w) {
 					continue
 				}
+				hit := true
 				for _, c := range has {
 					if strings.IndexByte(w, c) == -1 {
-						continue
+						hit = false
+						break
 					}
+				}
+				if !hit {
+					continue
+				}
+				for _, c := range not {
+					if strings.IndexByte(w, c) != -1 {
+						hit = false
+						break
+					}
+				}
+				if !hit {
+					continue
 				}
 				count++
 			}
