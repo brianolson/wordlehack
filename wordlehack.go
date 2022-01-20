@@ -103,6 +103,10 @@ func main() {
 		wg.Add(1)
 	}
 	go submitter(la, guesses)
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
 	for xr := range results {
 		guess := xr.S
 		count := xr.I
